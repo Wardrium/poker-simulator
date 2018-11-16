@@ -1,0 +1,19 @@
+{
+  "name": "poker-simulator",
+  "version": "1.0.0",
+  "description": "Simulate poker games.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf dist",
+    "tests": "mocha dist/spec/*.spec.js"
+  },
+  "author": "Wardrium",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
