@@ -1,5 +1,5 @@
-import { Deck } from "../src/entities/deck";
 import { expect } from "chai";
+import { Deck } from "../src/generic/entities/deck";
 
 describe("Deck", () => {
     let deck: Deck;

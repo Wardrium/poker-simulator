@@ -1,8 +1,31 @@
+const NUMBER_OF_RANKS = 13;
+
 export class Card {
-    public code: CardCode;
+    public readonly code: CardCode;
 
     constructor(code: CardCode) {
         this.code = code;
+    }
+
+    public static createWithSuitAndRank(suit: CardSuit, rank: CardRank) {
+        let suitBase: number;
+        switch(suit) {
+            case CardSuit.Spade: 
+                suitBase = 0;
+                break;
+            case CardSuit.Heart:
+                suitBase = 1;
+                break;
+            case CardSuit.Diamond:
+                suitBase = 2;
+                break;
+            case CardSuit.Club:
+                suitBase = 3;
+                break;
+        }
+
+        const code: CardCode = suitBase * NUMBER_OF_RANKS + rank as CardCode;
+        return new Card(code);
     }
 
     public isEqualTo(card: Card): boolean {
@@ -10,7 +33,7 @@ export class Card {
     }
 
     get suit(): CardSuit {
-        switch (Math.floor(this.code / 13)) {
+        switch (Math.floor(this.code / NUMBER_OF_RANKS)) {
             case 0: return CardSuit.Spade;
             case 1: return CardSuit.Heart;
             case 2: return CardSuit.Diamond;
@@ -19,7 +42,7 @@ export class Card {
     }
 
     get rank(): CardRank {
-        switch (this.code % 13) {
+        switch (this.code % NUMBER_OF_RANKS) {
             case 0: return CardRank.Two;
             case 1: return CardRank.Three;
             case 2: return CardRank.Four;
@@ -37,7 +60,7 @@ export class Card {
     }
 
     get displayString(): String {
-        return this.rank + " of " + this.suit + "s";
+        return getCardRankDisplay(this.rank) + " of " + this.suit + "s";
     }
 }
 
@@ -49,19 +72,39 @@ export enum CardSuit {
 }
 
 export enum CardRank {
-    Two = "2",
-    Three = "3",
-    Four = "4",
-    Five = "5",
-    Six = "6",
-    Seven = "7",
-    Eight = "8",
-    Nine = "9",
-    Ten = "10",
-    Jack = "Jack",
-    Queen = "Queen",
-    King = "King",
-    Ace = "Ace",
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+    Nine,
+    Ten,
+    Jack,
+    Queen,
+    King,
+    Ace,
+}
+
+function getCardRankDisplay(cardRank: CardRank) {
+    const CardRankDisplays = {
+        [CardRank.Two]: "2",
+        [CardRank.Three]: "3",
+        [CardRank.Four]: "4",
+        [CardRank.Five]: "5",
+        [CardRank.Six]: "6",
+        [CardRank.Seven]: "7",
+        [CardRank.Eight]: "8",
+        [CardRank.Nine]: "9",
+        [CardRank.Ten]: "10",
+        [CardRank.Jack]: "Jack",
+        [CardRank.Queen]: "Queen",
+        [CardRank.King]: "King",
+        [CardRank.Ace]: "Ace",
+    }
+
+    return CardRankDisplays[cardRank];
 }
 
 export type CardCode = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |

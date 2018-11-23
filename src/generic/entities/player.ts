@@ -1,7 +1,7 @@
 import { Card } from "./card";
 
 export class Player {
-    private ID: number;
+    private Id: number;
     private numberChips: number;
     private hand: Card[];
 
@@ -15,5 +15,17 @@ export class Player {
 
     public clearHand(): void {
         this.hand = [];
+    }
+
+    public addChips(numberChips: number): void {
+        this.numberChips += numberChips;
+    }
+
+    public removeChips(numberChips: number): number {
+        if (numberChips > this.numberChips) {
+            numberChips = this.numberChips;
+        }
+        this.numberChips -= numberChips;
+        return numberChips;
     }
 }

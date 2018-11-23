@@ -7,6 +7,7 @@ export class Board {
 
     constructor(maxCards: number = 5) {
         this.maxCards = maxCards;
+        this.cards = [];
     }
 
     public reset(): void {
