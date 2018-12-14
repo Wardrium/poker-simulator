@@ -5,7 +5,7 @@ describe("Board", () => {
 	let board: Board;
 
 	beforeEach(() => {
-		board = new Board();
+		board = new Board(5);
 	});
 
 	it("should initialize as an empty board", () => {

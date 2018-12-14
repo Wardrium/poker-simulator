@@ -1,7 +1,7 @@
 import { Card } from "./card";
+import { PlayerAction, PlayerCheckAction, PlayerCallAction, PlayerFoldAction, PlayerRaiseAction, PlayerAllInAction } from "../actions/action";
 
-export class Player {
-    private Id: number;
+export abstract class Player {
     private numberChips: number;
     private hand: Card[];
 
@@ -27,5 +27,27 @@ export class Player {
         }
         this.numberChips -= numberChips;
         return numberChips;
+    }
+
+    public abstract makeAction(): PlayerAction;
+
+    protected check(): PlayerAction {
+        return new PlayerCheckAction();
+    }
+
+    protected call(): PlayerAction {
+        return new PlayerCallAction();
+    }
+
+    protected fold(): PlayerAction {
+        return new PlayerFoldAction();
+    }
+
+    protected raise(raiseAmount: number): PlayerAction {
+        return new PlayerRaiseAction(raiseAmount);
+    }
+
+    protected allIn(): PlayerAction {
+        return new PlayerAllInAction(this.numberChips);
     }
 }

@@ -5,7 +5,7 @@ export class Board {
 
     private maxCards: number;
 
-    constructor(maxCards: number = 5) {
+    constructor(maxCards: number) {
         this.maxCards = maxCards;
         this.cards = [];
     }
@@ -30,27 +30,19 @@ export class Board {
         return this.cards;
     }
 
-    public getFlop(): Card[] | null {
-        if (this.cards.length >= 3) {
-            return this.cards.slice(0, 3);
-        } else {
-            return null;
+    public getCard(cardIndex: number): Card {
+        if (cardIndex >= this.cards.length) {
+            throw new Error("cardIndex out of bounds.");
         }
+        return this.cards[cardIndex];
     }
 
-    public getTurn(): Card | null {
-        if (this.cards.length >= 4) {
-            return this.cards[4];
-        } else {
-            return null;
+    public getCards(cardIndicies: number[]): Card[] {
+        const cards: Card[] = [];
+        for (let i = 0; i < cardIndicies.length; i++) {
+            const cardIndex = cardIndicies[i];
+            cards.push(this.getCard(cardIndex));
         }
-    }
-
-    public getRiver(): Card | null {
-        if (this.cards.length === 5) {
-            return this.cards[5];
-        } else {
-            return null;
-        }
+        return cards;
     }
 }
