@@ -1,6 +1,6 @@
 import { HandRanker } from "../generic/handRanker";
 import { Card } from "../generic/entities/card";
-import { HandComboType, HandCombo } from "./THHoldemCombo";
+import { HandComboType, HandCombo } from "./THCombo";
 
 interface HandComboAndIndex {
 	index: number;

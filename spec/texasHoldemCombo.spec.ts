@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { Card, CardSuit, CardRank } from "../src/generic/entities/card";
-import { HandCombo, HandComboType } from "../src/texasHoldem/THHoldemCombo";
+import { HandCombo, HandComboType } from "../src/texasHoldem/THCombo";
 
 interface ExpectedHandCombo {
 	comboType: HandComboType;
