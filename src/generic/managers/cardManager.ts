@@ -5,14 +5,16 @@ import { Board } from "../entities/board";
 
 export abstract class CardManager {
 	protected deck: Deck;
+	protected board: Board;
 
-	constructor() {
+	constructor(boardSize: number) {
 		this.deck = new Deck();
+		this.board = new Board(boardSize);
 	}
 
-	public dealCardOnBoard(board: Board): void {
+	public dealCardOnBoard(): void {
 		const card = this.deck.dealCard();
-		board.addCard(card);
+		this.board.addCard(card);
 	}
 
 	public dealCardToPlayer(player: Player): void {

@@ -1,5 +1,4 @@
 import { Player } from "../entities/player";
-import { PlayerAction } from "../actions/action";
 
 export abstract class PlayerManager {
 	protected players: (Player | null)[]; // Players at the table in order of seating. null means the seat is empty.
@@ -28,20 +27,22 @@ export abstract class PlayerManager {
 		return true;
 	}
 
-	// Returns the index of the next available seat, or -1 if none are available.
-	protected getNextAvailableSeatIndex(): number {
-		for (let i = 0; i < this.players.length; i++) {
-			if (this.players[i] === null) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
 	public getAllPlayers(): Player[] {
 		return this.players.filter((player) => {
 			return player !== null;
 		});
+	}
+
+	public getAllActivePlayers(): Player[] {
+		const activePlayers: Player[] = [];
+
+		for (let playerIndex = 0; playerIndex < this.players.length; playerIndex++) {
+			if (this.activePlayerIndices.has(playerIndex)) {
+				activePlayers.push(this.getPlayerAtIndex(playerIndex));
+			}
+		}
+
+		return activePlayers;
 	}
 
 	public getPlayerAtIndex(playerIndex: number): Player {
@@ -52,31 +53,25 @@ export abstract class PlayerManager {
 		return player;
 	}
 
-	// Gets all active players in seating order, starting with the given start index.
-	protected getActivePlayers(startingSeatIndex: number): number[] {
-		const activePlayers = [];
-		
-		let playerIndex = startingSeatIndex;
-		if (this.activePlayerIndices.has(playerIndex)) {
-			activePlayers.push(playerIndex);
-		}
-		playerIndex = this.getNextPlayerIndex(playerIndex);
-	
-		while (playerIndex !== startingSeatIndex) {
-			if (this.activePlayerIndices.has(playerIndex)) {
-				activePlayers.push(playerIndex);
+	// Returns the index of the next available seat, or -1 if none are available.
+	protected getNextAvailableSeatIndex(): number {
+		for (let i = 0; i < this.players.length; i++) {
+			if (this.players[i] === null) {
+				return i;
 			}
-			playerIndex = this.getNextPlayerIndex(playerIndex);		
 		}
-
-		return activePlayers;
+		return -1;
 	}
 
-	protected getNextPlayerIndex(playerIndex: number) {
-		if (playerIndex === this.players.length - 1) {
+	protected getNextPlayerIndex(playerIndex: number, playersList = this.players) {
+		if (playerIndex >= playersList.length - 1) {
 			return 0;
 		} else {
 			return playerIndex += 1;
 		}
+	}
+
+	private isPlayerActive(playerIndex: number): boolean {
+		return this.activePlayerIndices.has(playerIndex);
 	}
 }

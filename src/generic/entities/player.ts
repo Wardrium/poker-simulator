@@ -1,5 +1,6 @@
 import { Card } from "./card";
-import { PlayerAction, PlayerCheckAction, PlayerCallAction, PlayerFoldAction, PlayerRaiseAction, PlayerAllInAction } from "../actions/action";
+import { PlayerAction, PlayerCheckAction, PlayerCallAction, PlayerFoldAction, PlayerRaiseAction, PlayerAllInAction } from "../actions/playerAction";
+import { RequireAction } from "../actions/requireAction";
 
 export abstract class Player {
     private numberChips: number;
@@ -21,15 +22,28 @@ export abstract class Player {
         this.numberChips += numberChips;
     }
 
-    public removeChips(numberChips: number): number {
-        if (numberChips > this.numberChips) {
-            numberChips = this.numberChips;
-        }
-        this.numberChips -= numberChips;
-        return numberChips;
+    /**
+     * Removes all chips from this player. Returns the number of chips removed.
+     */
+    public removeAllChips(): number {
+        const removedChips = this.numberChips;
+        this.removeChipsIfEnough(removedChips);
+        return removedChips;
     }
 
-    public abstract makeAction(): PlayerAction;
+    /**
+     * Returns true if the player has enough chips and removes the chips.
+     * Otherwise returns false and the amount of chips is unaffected.
+     */
+    public removeChipsIfEnough(numberChips: number): boolean {
+        if (numberChips > this.numberChips) {
+            return false;
+        }
+        this.numberChips -= numberChips;
+        return true;
+    }
+
+    public abstract makeAction(requireAction: RequireAction): PlayerAction;
 
     protected check(): PlayerAction {
         return new PlayerCheckAction();

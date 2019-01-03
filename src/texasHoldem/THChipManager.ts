@@ -1,7 +1,7 @@
+import { ChipTransactionManager } from "../generic/managers/chipTransactionManager";
 import { Player } from "../generic/entities/player";
-import { ChipManager } from "../generic/managers/chipManager";
 
-export class THChipManager extends ChipManager {
+export class THChipManager extends ChipTransactionManager {
 	private smallBlindAmount: number;
 	private bigBlindAmount: number;
 	private anteAmount: number;
@@ -11,9 +11,5 @@ export class THChipManager extends ChipManager {
 		this.smallBlindAmount = smallBlind;
 		this.bigBlindAmount = bigBlind;
 		this.anteAmount = this.anteAmount;
-	}
-
-	public postBlinds(dealerPosition: number) {
-		
 	}
 }

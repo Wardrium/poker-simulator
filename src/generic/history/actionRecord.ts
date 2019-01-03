@@ -1,4 +1,4 @@
-import { PlayerAction } from "../actions/action";
+import { PlayerAction } from "../actions/playerAction";
 
 export class PlayerActionRecord {
     public readonly playerId: number;
